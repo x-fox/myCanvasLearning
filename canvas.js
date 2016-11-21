@@ -1,3 +1,5 @@
+
+
 function drawLineBegin(){
 	myCanvasDraw.addEventListener("mousedown",dodrawLine,false);
 	document.getElementById("drawLBBtn").style.display = "none";
@@ -35,43 +37,33 @@ function getPointOnCanvas(canvas, x, y) {
 }*/
 
 // 方法二 兼容IE,chrome,opera浏览器,Firefox不支持(新版本已支持)
+// var oX,oY;
 function dodrawLine(e){
 
 	var myCanvasDraw = document.getElementById("myCanvasDraw");
 	var ctxDraw = myCanvasDraw.getContext("2d");
 	ctxDraw.strokeStyle = "#f00";
 	ctxDraw.lineWidth = 5;
-	// var startX = e.offsetX;
-	// console.log("相对画布对象x坐标"+startX);
-	// var startY = e.offsetY;
-	// console.log("相对画布对象y坐标"+startY);
-
-	/*var move = function(e){
-		ctxDraw.lineTo(e.offsetX,e.offsetY);
-		ctxDraw.stroke();
-	}*/
+	
 	if (!ctxDrawFlag) {
-		ctxDraw.moveTo(e.offsetX,e.offsetY);
-		ctxDrawFlag = !ctxDrawFlag;
+		var oX = e.offsetX; //起始点坐标
+		var oY = e.offsetY;
 	}else{
-		ctxDraw.lineTo(e.offsetX,e.offsetY);
-		ctxDraw.stroke();
-		ctxDrawFlag = !ctxDrawFlag;
+		var eX = e.offsetX;  //结束点坐标
+		var eY = e.offsetY;
 	}
-	
-	/*myCanvasDraw.addEventListener("mousemove",function(e){
-		ctxDraw.lineTo(e.offsetX,e.offsetY);
-		ctxDraw.stroke();
-	},false);*/
-	// myCanvasDraw.addEventListener("mousemove",move,false);
-	/*myCanvasDraw.addEventListener("mouseup",function(e){
-		ctxDraw.lineTo(e.offsetX,e.offsetY);
-		ctxDraw.stroke();
-		// myCanvasDraw.removeEventListener("mousemove",move);
-		// myCanvasDraw.removeEventListener("mousedown");
-	},false);*/
+	ctxDrawFlag = !ctxDrawFlag;
 
-	
+	myCanvasDraw.onmousemove = function(e){ // 跟随鼠标移动画直线
+		if (ctxDrawFlag) {
+			ctxDraw.beginPath();
+			ctxDraw.clearRect(0,0,400,300);  // 每次移动清除画线，只画一次
+			ctxDraw.moveTo(oX,oY);
+			ctxDraw.lineTo(e.offsetX,e.offsetY);
+			ctxDraw.closePath();
+			ctxDraw.stroke();
+		}
+	}
 }
 
 
