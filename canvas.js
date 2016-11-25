@@ -1,13 +1,16 @@
 
+var ctxDrawFlag = false; //v1-绘制起始标识  v2-mousedown起始,mouseup结束
+var drawNum = 1;
 
 function drawLineBegin(){
-	myCanvasDraw.addEventListener("mousedown",dodrawLine,false);
+	// myCanvasDraw.addEventListener("mousedown",dodrawLine,false);
+	dodrawLine();
 	document.getElementById("drawLBBtn").style.display = "none";
 	document.getElementById("drawLEBtn").style.display = "block";
 }
 
 function drawLineEnd(){
-	myCanvasDraw.removeEventListener("mousedown",dodrawLine,false);
+	// myCanvasDraw.removeEventListener("mousedown",dodrawLine,false);
 	document.getElementById("drawLBBtn").style.display = "block";
 	document.getElementById("drawLEBtn").style.display = "none";
 }
@@ -37,24 +40,43 @@ function getPointOnCanvas(canvas, x, y) {
 }*/
 
 // 方法二 兼容IE,chrome,opera浏览器,Firefox不支持(新版本已支持)
-// var oX,oY;
-function dodrawLine(e){
 
-	var myCanvasDraw = document.getElementById("myCanvasDraw");
+function dodrawLine(){
+	var myCanvasDraw = document.createElement("canvas");
+	myCanvasDraw.setAttribute("id","myCanvasDraw"+drawNum);
+	myCanvasDraw.style.ZIndex = 99;
+	// canvas本身拥有width、height属性，与通过style设置的width、height属性不同，若使用style设置width、height则宽高会被拉伸！
+	myCanvasDraw.width = 400;  
+	myCanvasDraw.height = 300;  
+	// myCanvasDraw.style.border = "1px solid blue";
 	var ctxDraw = myCanvasDraw.getContext("2d");
 	ctxDraw.strokeStyle = "#f00";
-	ctxDraw.lineWidth = 5;
-	
-	if (!ctxDrawFlag) {
-		var oX = e.offsetX; //起始点坐标
-		var oY = e.offsetY;
-	}else{
-		var eX = e.offsetX;  //结束点坐标
-		var eY = e.offsetY;
+	ctxDraw.lineWidth = 3;
+
+	ctxDraw.moveTo(0,0);
+	ctxDraw.lineTo(200,200);
+	ctxDraw.stroke();
+
+	var oX,oY,eX,eY;
+	document.body.appendChild(myCanvasDraw);  //每新增一条画线 新增一个画布
+	// document.getElementById("canvasWrap").appendChild(myCanvasDraw);  //每新增一条画线 新增一个画布
+	myCanvasDraw.onmousedown = function(e){
+		if (!ctxDrawFlag) {
+			oX = e.offsetX; //起始点坐标
+			oY = e.offsetY;
+		}else{
+			eX = e.offsetX;  //结束点坐标
+			eY = e.offsetY;
+			drawNum = drawNum + 1;
+		}
+		ctxDrawFlag = !ctxDrawFlag;
 	}
-	ctxDrawFlag = !ctxDrawFlag;
+	
 
 	myCanvasDraw.onmousemove = function(e){ // 跟随鼠标移动画直线
+		var ctxDraw = myCanvasDraw.getContext("2d");
+		ctxDraw.strokeStyle = "#f00";
+		ctxDraw.lineWidth = 3;
 		if (ctxDrawFlag) {
 			ctxDraw.beginPath();
 			ctxDraw.clearRect(0,0,400,300);  // 每次移动清除画线，只画一次

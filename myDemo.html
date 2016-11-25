@@ -6,17 +6,12 @@
 	<link rel="stylesheet" href="canvas.css">
 	<script src="canvas.js"></script>
 	<script type="text/javascript">
-		var ctxDrawFlag = false; //v1-绘制起始标识  v2-mousedown起始,mouseup结束
+	
 		window.addEventListener("load",function(){
 			// alert("页面加载完成！");
 			var myVideo = document.getElementById("myVideo");
 			var myCanvas = document.getElementById("myCanvas");
-			var myCanvasDraw = document.getElementById("myCanvasDraw");
 			var ctx = myCanvas.getContext("2d");
-			var ctxDraw = myCanvasDraw.getContext("2d");
-			/*window.addEventListener("timeupdate",function(){
-				myCanvas.getContext("2d").drawImage(myVideo,0,0,400,300);
-			},true);*/
 
 			// 取消timeupdate事件调用,直接通过timer定时刷新绘制图像,定时参数小于视频帧率,视频渲染流畅
 			setInterval(function(){
@@ -33,7 +28,7 @@
 		<p>请在支持HTML5 video标签的浏览器中运行</p>
 	</video>
 	<canvas id="myCanvas" width="400" height="300" style="border: 1px solid red"></canvas>
-	<canvas id="myCanvasDraw" width="400" height="300" style="border: 1px solid red;background: transparent;"></canvas>
+	<!-- <canvas id="myCanvasDraw" width="400" height="300" style="border: 1px solid red;background: transparent;"></canvas> -->
 	<div class="menu">
 		<input type="button" name="" id="drawLBBtn" value="开始画线" onclick="drawLineBegin()">
 		<input type="button" name="" id="drawLEBtn" value="结束画线" style="display: none" onclick="drawLineEnd()">

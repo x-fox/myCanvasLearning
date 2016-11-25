@@ -3,11 +3,11 @@ video{
 	width: 400px;
 	height: 300px;
 }
-#myCanvasDraw{
+canvas[id^="myCanvasDraw"]{
 	position: absolute;
 	left: 414px;
 	top: 8px;
-	z-index: 99;
+	background: transparent;
 }
 .menu{
 	width: 800px;
