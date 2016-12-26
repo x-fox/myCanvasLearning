@@ -1,65 +1,61 @@
 
 var ctxDrawFlag = false; //v1-绘制起始标识  v2-mousedown起始,mouseup结束
 var drawNum = 1;
+window.addEventListener("load",function(){
+			// alert("页面加载完成！");
+			var myVideo = document.getElementById("myVideo");
+			var myCanvas = document.getElementById("myCanvas");
+			var ctx = myCanvas.getContext("2d");
 
-function drawLineBegin(){
+			// 取消timeupdate事件调用,直接通过timer定时刷新绘制图像,定时参数小于视频帧率,视频渲染流畅
+			setInterval(function(){
+				ctx.drawImage(myVideo,0,0,400,300);
+			},20);
+
+
+			for(var i = 1; i <= 4; i++){
+				document.getElementById("drawLBBtn_"+i).disabled = true;
+			}
+		},true);
+
+function enableLine(num){
+	var flag = document.getElementById("checkLine"+num).checked;
+	// alert(flag);
+	if (flag) {
+		document.getElementById("drawLBBtn_"+num).disabled = false;
+	}else {
+		document.getElementById("drawLBBtn_"+num).disabled = true;
+	}
+}
+
+function drawLineBegin(num){
 	// myCanvasDraw.addEventListener("mousedown",dodrawLine,false);
-	dodrawLine();
-	document.getElementById("drawLBBtn").style.display = "none";
-	document.getElementById("drawLEBtn").style.display = "block";
+	dodrawLine(num);
+	document.getElementById("drawLBBtn_"+num).style.display = "none";
+	document.getElementById("checkLine"+num).disabled = true;
+	document.getElementById("drawLEBtn_"+num).style.display = "block";
 }
 
-function drawLineEnd(){
+function drawLineEnd(num){
 	// myCanvasDraw.removeEventListener("mousedown",dodrawLine,false);
-	document.getElementById("drawLBBtn").style.display = "block";
-	document.getElementById("drawLEBtn").style.display = "none";
+	var myCanvasDraw = document.getElementById("myCanvasDraw_"+num);
+	myCanvasDraw.onmousedown = null;
+	document.getElementById("checkLine"+num).disabled = false;
+	document.getElementById("drawLBBtn_"+num).style.display = "block";
+	document.getElementById("drawLEBtn_"+num).style.display = "none";
 }
 
-// 方法一 兼容Firefox,chrome,IE浏览器
-/*function dodrawLine(e){
-	var startX = e.pageX;
-	console.log("相对文档x坐标"+startX);
-	// console.log(e.offsetX);
-	var startY = e.pageY;
-	console.log("相对文档y坐标"+startY);
-	// console.log(e.offsetY);
-	startX = getPointOnCanvas(myCanvas,startX,startY).x;
-	console.log("相对画布x坐标"+startX);
-	startY = getPointOnCanvas(myCanvas,startX,startY).y;
-	console.log("相对画布y坐标"+startY);
-}
 
-//返回鼠标相对画布对象的x,y坐标值
-function getPointOnCanvas(canvas, x, y) {
-    var bbox =canvas.getBoundingClientRect();
-    // var yy = window.pageYOffset;
-    return { x: x - (bbox.left+window.pageXOffset)*(canvas.width / bbox.width),     //window.pageXOffset表示滚动条向右滚动的像素
-             y: y - (bbox.top+window.pageYOffset)*(canvas.height / bbox.height)     //window.pageYOffset表示滚动条向下滚动的像素
-            };
-
-}*/
-
-// 方法二 兼容IE,chrome,opera浏览器,Firefox不支持(新版本已支持)
-
-function dodrawLine(){
-	var myCanvasDraw = document.createElement("canvas");
-	myCanvasDraw.setAttribute("id","myCanvasDraw"+drawNum);
-	myCanvasDraw.style.ZIndex = 99;
+function dodrawLine(num){
 	// canvas本身拥有width、height属性，与通过style设置的width、height属性不同，若使用style设置width、height则宽高会被拉伸！
-	myCanvasDraw.width = 400;  
-	myCanvasDraw.height = 300;  
-	// myCanvasDraw.style.border = "1px solid blue";
-	var ctxDraw = myCanvasDraw.getContext("2d");
-	ctxDraw.strokeStyle = "#f00";
-	ctxDraw.lineWidth = 3;
-
-	ctxDraw.moveTo(0,0);
-	ctxDraw.lineTo(200,200);
-	ctxDraw.stroke();
+	
+	var myCanvasDraw = document.getElementById("myCanvasDraw_"+num);
+	for(var i = 1; i < 4; i++){
+		document.getElementById("myCanvasDraw_"+i).style.zIndex = 0;
+	}
+	myCanvasDraw.style.zIndex = 99;
 
 	var oX,oY,eX,eY;
-	document.body.appendChild(myCanvasDraw);  //每新增一条画线 新增一个画布
-	// document.getElementById("canvasWrap").appendChild(myCanvasDraw);  //每新增一条画线 新增一个画布
 	myCanvasDraw.onmousedown = function(e){
 		if (!ctxDrawFlag) {
 			oX = e.offsetX; //起始点坐标
@@ -72,7 +68,6 @@ function dodrawLine(){
 		ctxDrawFlag = !ctxDrawFlag;
 	}
 	
-
 	myCanvasDraw.onmousemove = function(e){ // 跟随鼠标移动画直线
 		var ctxDraw = myCanvasDraw.getContext("2d");
 		ctxDraw.strokeStyle = "#f00";

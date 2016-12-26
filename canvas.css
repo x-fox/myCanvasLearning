@@ -1,13 +1,25 @@
+
+*{
+	padding: 0;
+	margin: 0;
+}
+
 video{
 	border: 1px solid red;
 	width: 400px;
 	height: 300px;
 }
-canvas[id^="myCanvasDraw"]{
+.canvasWrap{
+	position: relative;
+	height: 300px;
+	overflow: hidden;
+}
+canvas[id^="myCanvas"]{
 	position: absolute;
 	left: 414px;
 	top: 8px;
 	background: transparent;
+	border: 1px solid #F00;
 }
 .menu{
 	width: 800px;
