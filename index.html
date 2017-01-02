@@ -4,48 +4,76 @@
 	<meta charset="UTF-8">
 	<title>canvas_drawLine</title>
 	<link rel="stylesheet" href="canvas.css">
-	<script src="canvas.js"></script>
-	<script type="text/javascript">
-	
-			
-	</script>
 </head>
 <body>
-
-	
-	<div class="canvasWrap">
-		<video id="myVideo" controls autobuffer="">
+	<div class="initData">
+		<input type="hidden" value="()()">
+		<input type="hidden" value="()()">
+		<input type="hidden" value="()()">
+		<input type="hidden" value="()()">
+	</div>
+	<div id="canvasWrap">
+		<video id="myVideo" controls autobuffer="" autoplay="autoplay" loop="loop">
 			<source src="demo.mp4">
 			<!-- <source src="samsbaseline.264"> --> <!-- h264视频不能直接读取 -->
 			<p>请在支持HTML5 video标签的浏览器中运行</p>
 		</video>
-		<canvas id="myCanvas" width="400" height="300"></canvas>
-		<canvas id="myCanvasDraw_1" width="400" height="300"></canvas>
-		<canvas id="myCanvasDraw_2" width="400" height="300"></canvas>
-		<canvas id="myCanvasDraw_3" width="400" height="300"></canvas>
-		<canvas id="myCanvasDraw_4" width="400" height="300"></canvas>
+		<canvas id="myCanvas" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_1" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_2" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_3" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_4" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_5" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_6" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_7" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_8" width="640" height="360"></canvas>
+		<canvas id="myCanvasDraw_9" width="640" height="360"></canvas>
+		<div id="myContextMenu">
+			<ul id="menuList">
+				<li><img alt=""><span>启用PTZ</span></li>
+				<li><img alt=""><span>框选缩放</span></li>
+				<li><img alt=""><span>矢量控制</span></li>
+				<li><img alt=""><span>手动跟踪</span></li>
+				<li><img alt=""><span>全屏</span></li>
+				<li><img alt=""><span>快照</span></li>
+				<li><img alt=""><span>电子放大</span></li>
+				<li><img alt=""><span>显示智能信息</span></li>
+			</ul>
+		</div>
 	</div>
+	<!-- 默认视频自动播放，实际情况下实时视频是自动播放并显示的，不能暂停 -->
+	<!-- <div class="menu">
+		<input type="button" value="播放视频">
+		<input type="button" value="暂停视频">
+	</div> -->
 	
 	<div class="menu">
 		<input type="checkbox" id="checkLine1" onclick="enableLine(1)"><label>绊线1:</label>
-		<input type="button" id="drawLBBtn_1" value="开始画线" onclick="drawLineBegin(1)">
-		<input type="button" id="drawLEBtn_1" value="结束画线" style="display: none" onclick="drawLineEnd(1)">
+		<input type="button" id="drawLineBeginBtn_1" value="绘制开始" onclick="drawLineBegin(1)">
+		<input type="button" id="drawLineEndBtn_1" value="绘制结束" onclick="drawLineEnd(1)">
 	</div>
 	<div class="menu">
 		<input type="checkbox" id="checkLine2" onclick="enableLine(2)"><label>绊线2:</label>
-		<input type="button" id="drawLBBtn_2" value="开始画线" onclick="drawLineBegin(2)">
-		<input type="button" id="drawLEBtn_2" value="结束画线" style="display: none" onclick="drawLineEnd(2)">
+		<input type="button" id="drawLineBeginBtn_2" value="绘制开始" onclick="drawLineBegin(2)">
+		<input type="button" id="drawLineEndBtn_2" value="绘制结束" onclick="drawLineEnd(2)">
 	</div>
 	<div class="menu">
 		<input type="checkbox" id="checkLine3" onclick="enableLine(3)"><label>绊线3:</label>
-		<input type="button" id="drawLBBtn_3" value="开始画线" onclick="drawLineBegin(3)">
-		<input type="button" id="drawLEBtn_3" value="结束画线" style="display: none" onclick="drawLineEnd(3)">
+		<input type="button" id="drawLineBeginBtn_3" value="绘制开始" onclick="drawLineBegin(3)">
+		<input type="button" id="drawLineEndBtn_3" value="绘制结束" onclick="drawLineEnd(3)">
 	</div>
 	<div class="menu">
 		<input type="checkbox" id="checkLine4" onclick="enableLine(4)"><label>绊线4:</label>
-		<input type="button" id="drawLBBtn_4" value="开始画线" onclick="drawLineBegin(4)">
-		<input type="button" id="drawLEBtn_4" value="结束画线" style="display: none" onclick="drawLineEnd(4)">
+		<input type="button" id="drawLineBeginBtn_4" value="绘制开始" onclick="drawLineBegin(4)">
+		<input type="button" id="drawLineEndBtn_4" value="绘制结束" onclick="drawLineEnd(4)">
 	</div>
 	
+	<div class="menu">
+		<input type="checkbox" id="checkRegion" onclick="enableRegion()"><label>区域:</label>
+		<input type="button" id="drawRegionBeginBtn" value="绘制开始" onclick="drawRegionBegin()">
+		<input type="button" id="drawRegionEndBtn" value="绘制结束" onclick="drawRegionEnd()">
+	</div>
+	
+	<script src="canvas.js"></script>
 </body>
 </html>
