@@ -13,8 +13,10 @@
 		<input type="hidden" value="()()">
 	</div>
 	<div id="canvasWrap">
-		<video id="myVideo" controls autobuffer="" autoplay="autoplay" loop="loop">
-			<source src="demo.mp4">
+		<video id="myVideo" controls autobuffer="" width="250" autoplay loop muted>
+			<source src="demo.mp4" type="video/mp4">
+			<!-- <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/mp4">
+			<source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4"> -->
 			<!-- <source src="samsbaseline.264"> --> <!-- h264视频不能直接读取 -->
 			<p>请在支持HTML5 video标签的浏览器中运行</p>
 		</video>
@@ -42,10 +44,10 @@
 		</div>
 	</div>
 	<!-- 默认视频自动播放，实际情况下实时视频是自动播放并显示的，不能暂停 -->
-	<!-- <div class="menu">
+	<div class="menu">
 		<input type="button" value="播放视频">
 		<input type="button" value="暂停视频">
-	</div> -->
+	</div>
 	
 	<div class="menu">
 		<input type="checkbox" id="checkLine1" onclick="enableLine(1)"><label>绊线1:</label>

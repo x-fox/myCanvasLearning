@@ -9,7 +9,9 @@ video{
 	border: 1px solid red;
 	width: 640px;
 	height: 360px;
-	display: none; 
+	position: absolute;
+	top: 0;
+	left: 0px;
 }
 #canvasWrap{
 	position: relative;
